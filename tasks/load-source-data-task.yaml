@@ -1,0 +1,16 @@
+---
+platform: linux
+
+outputs:
+- name: source-data
+
+inputs:
+- name: scripts
+
+image_resource:
+  type: docker-image
+  source: {repository: busybox}
+
+run:
+  path: parallel   -a 
+  args: ["--eta","--progress","-a","./scripts/dataload/load_source_data.sh"]

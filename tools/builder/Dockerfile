@@ -1,4 +1,4 @@
-FROM busybox
-
-
-CMD ["echo","makkara5"]
+FROM alpine
+RUN apk add --no-cache curl parallel
+ADD tools
+CMD ["echo","makkara"]

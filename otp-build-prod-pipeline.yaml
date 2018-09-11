@@ -28,11 +28,8 @@ jobs:
   - get: otp-builder-image
     passed: [build-otp-builder-image]
     trigger: true
-  - aggregate:
-    - task: load-hsl-gtfs
-      file: otp-builder-repo/tasks/load-hsl-gtfs-task.yaml
-    - task: load-hsl-osm
-      file: otp-builder-repo/tasks/load-hsl-osm-task.yaml
+  - task: load-source-data
+    file: otp-builder-repo/tasks/load-source-data-task.yaml
   - task: list files
     config:
       platform: linux

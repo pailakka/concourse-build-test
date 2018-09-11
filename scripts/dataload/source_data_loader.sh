@@ -1,0 +1,1 @@
+parallel --eta --progress -a ./otp-builder-repo/scripts/dataload/download_sources.sh

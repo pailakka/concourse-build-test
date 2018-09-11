@@ -12,5 +12,5 @@ image_resource:
   source: {repository: teemupel/otp-builder-image}
 
 run:
-  path: parallel   -a 
-  args: ["--eta","--progress","-a","./otp-builder-repo/scripts/dataload/load_source_data.sh"]
+  path: /bin/ash
+  args: ["./otp-builder-repo/scripts/dataload/source_data_loader.sh"]

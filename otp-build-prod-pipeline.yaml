@@ -5,26 +5,34 @@ resources:
   source:
     uri: https://github.com/pailakka/concourse-build-test.git
 
+
 - name: otp-builder-image
   type: docker-image
   source:
-    repository: pailakka/otp-builder-image
-
+    repository: teemupel/otp-builder-image
+    username: teemupel
+    password: <asd>
 jobs:
 - name: build-otp-builder-image
   plan:
   - get: otp-builder-repo
+    trigger: true  
   - put: otp-builder-image
-    params: {build: tools/builder}
+    params: 
+      build: otp-builder-repo/tools/builder
 
 - name: build-otp-prod
   plan:
-  - get: otp-builder-repo    
+  - get: otp-builder-repo
+    passed: [build-otp-builder-image]
+  - get: otp-builder-image
+    passed: [build-otp-builder-image]
+    trigger: true
   - aggregate:
     - task: load-hsl-gtfs
-      file: tasks/load-hsl-gtfs-task.yml
+      file: otp-builder-repo/tasks/load-hsl-gtfs-task.yaml
     - task: load-hsl-osm
-      file: tasks/load-hsl-osm-task.yml
+      file: otp-builder-repo/tasks/load-hsl-osm-task.yaml
   - task: list files
     config:
       platform: linux
@@ -37,4 +45,4 @@ jobs:
 
       run:
         path: ls
-        args: [router-data/*]
+        args: [source-data/*]

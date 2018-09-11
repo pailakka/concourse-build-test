@@ -42,7 +42,6 @@ jobs:
 
       inputs:
       - name: source-data
-
       run:
-        path: ls
-        args: [source-data/*]
+        path: find
+        args: ["."]

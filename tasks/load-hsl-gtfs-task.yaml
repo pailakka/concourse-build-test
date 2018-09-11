@@ -10,4 +10,4 @@ image_resource:
 
 run:
   path: wget
-  args: ["-O ./source-data/hsl.zip","http://dev.hsl.fi/gtfs/hsl.zip"]
+  args: ["-O./source-data/hsl.zip","http://dev.hsl.fi/gtfs/hsl.zip"]

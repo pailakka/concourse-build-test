@@ -10,4 +10,4 @@ image_resource:
 
 run:
   path: wget
-  args: ["-O ./source-data/hsl.osm.pbf","http://dev.hsl.fi/osm.hsl/hsl.osm.pbf"]
+  args: ["-O./source-data/hsl.osm.pbf","http://dev.hsl.fi/osm.hsl/hsl.osm.pbf"]

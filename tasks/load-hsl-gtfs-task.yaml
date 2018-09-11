@@ -1,13 +1,13 @@
 ---
 platform: linux
 
+outputs:
+- name: source-data
+
 image_resource:
   type: docker-image
   source: {repository: busybox}
 
 run:
   path: wget
-  args: ["http://dev.hsl.fi/gtfs/hsl.zip"]
-
-outputs:
-- name: source-data
+  args: ["-O ./source-data/hsl.zip","http://dev.hsl.fi/gtfs/hsl.zip"]

@@ -1,0 +1,38 @@
+---
+resources:
+- name: otp-builder-repo
+  type: git
+  source:
+    uri: https://github.com/starkandwayne/concourse-tutorial.git
+
+jobs:
+- name: build-otp-builder-image
+  plan:
+  - get: otp-builder-repo
+  - put: otp-builder
+    params: {build: tools/builder}
+
+- name: build-otp-prod
+  plan:
+  - aggregate:
+    - task: load-hsl-gtfs
+      inputs:
+        - name: tasks
+      file: tasks/load-hsl-gtfs-task.yml
+    - task: load-hsl-osm
+      inputs:
+        - name: tasks    
+      file: tasks/load-hsl-osm-task.yml
+  - task: list files
+    config:
+      platform: linux
+      image_resource:
+        type: docker-image
+        source: {repository: busybox}
+
+      inputs:
+      - name: source-data
+
+      run:
+        path: ls
+        args: [router-data/*]

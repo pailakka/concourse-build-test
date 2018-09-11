@@ -3,25 +3,27 @@ resources:
 - name: otp-builder-repo
   type: git
   source:
-    uri: https://github.com/starkandwayne/concourse-tutorial.git
+    uri: https://github.com/pailakka/concourse-build-test.git
+
+- name: otp-builder-image
+  type: docker-image
+  source:
+    repository: pailakka/otp-builder-image
 
 jobs:
 - name: build-otp-builder-image
   plan:
   - get: otp-builder-repo
-  - put: otp-builder
+  - put: otp-builder-image
     params: {build: tools/builder}
 
 - name: build-otp-prod
   plan:
+  - get: otp-builder-repo    
   - aggregate:
     - task: load-hsl-gtfs
-      inputs:
-        - name: tasks
       file: tasks/load-hsl-gtfs-task.yml
     - task: load-hsl-osm
-      inputs:
-        - name: tasks    
       file: tasks/load-hsl-osm-task.yml
   - task: list files
     config:

@@ -5,12 +5,12 @@ outputs:
 - name: source-data
 
 inputs:
-- name: scripts
+- name: otp-builder-repo
 
 image_resource:
   type: docker-image
-  source: {repository: busybox}
+  source: {repository: teemupel/otp-builder-image}
 
 run:
   path: parallel   -a 
-  args: ["--eta","--progress","-a","./scripts/dataload/load_source_data.sh"]
+  args: ["--eta","--progress","-a","./otp-builder-repo/scripts/dataload/load_source_data.sh"]
